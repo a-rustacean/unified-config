@@ -27,7 +27,7 @@ template = '''
     {{- if $part -}}
       {{- $sub := split "/" $part -}}
       {{- if eq (len $sub) 2 -}}
-        <{{ index $sub "_1" }}>{{ index $sub "_0" }}</> <#7f849c>| </>
+        <{{ index $sub "_1" }}>{{ index $sub "_0" }}</> <@overlay1@>| </>
       {{- end -}}
     {{- end -}}
   {{- end -}}
@@ -37,17 +37,17 @@ template = '''
 	[[blocks.segments]] # Hostname
   type = 'text'
   style = 'plain'
-  template = '{{ if eq .HostName "server02" }}<green>󰒋 {{.HostName}}</> <#7f849c>|</> {{ end }}'
+  template = '{{ if eq .HostName "server02" }}<green>󰒋 {{.HostName}}</> <@overlay1@>|</> {{ end }}'
 
 	[[blocks.segments]] # Python venv
   type = 'text'
   style = 'plain'
-  template = '{{ if .Env.VIRTUAL_ENV }}<yellow>🐍 venv</> <#7f849c>|</> {{ end }}'
+  template = '{{ if .Env.VIRTUAL_ENV }}<yellow>🐍 venv</> <@overlay1@>|</> {{ end }}'
 
 	[[blocks.segments]] # Nix shell indicator
   type = 'text'
   style = 'plain'
-  template = '{{ if and .Env.IN_NIX_SHELL (not .Env.DEVSHELL_NAME) }}<blue> nsh</> <#7f849c>|</> {{ end }}'
+  template = '{{ if and .Env.IN_NIX_SHELL (not .Env.DEVSHELL_NAME) }}<blue> nsh</> <@overlay1@>|</> {{ end }}'
 
   [[blocks.segments]]
     template = '{{ .Path }}'

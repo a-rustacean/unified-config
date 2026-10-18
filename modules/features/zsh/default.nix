@@ -1,30 +1,48 @@
 { moduleWithSystem, inputs, ... }:
 
 let
-  module = moduleWithSystem (
+  shellConfig = {
+    enable = true;
+    enableCompletion = true;
+    enableBashCompletion = true;
+    histSize = 10000;
+  };
+
+  overlay = self': {
+    nixpkgs.overlays = [
+      (final: prev: {
+        zsh = self'.packages.zsh;
+      })
+    ];
+  };
+
+  nixosModule = moduleWithSystem (
     { pkgs, self', ... }:
-    {
-      nixpkgs.overlays = [
-        (final: prev: {
-          zsh = self'.packages.zsh;
-        })
-      ];
-      programs.zsh = {
-        enable = true;
-        enableCompletion = true;
-        enableBashCompletion = true;
+    overlay self'
+    // {
+      programs.zsh = shellConfig // {
         autosuggestions.enable = true;
         syntaxHighlighting.enable = true;
-        histSize = 10000;
       };
       users.defaultUserShell = pkgs.zsh;
+    }
+  );
+
+  darwinModule = moduleWithSystem (
+    { self', ... }:
+    overlay self'
+    // {
+      programs.zsh = shellConfig // {
+        enableAutosuggestions = true;
+        enableSyntaxHighlighting = true;
+      };
     }
   );
 in
 {
   flake = {
-    nixosModules.zsh = module;
-    darwinModules.zsh = module;
+    nixosModules.zsh = nixosModule;
+    darwinModules.zsh = darwinModule;
   };
 
   perSystem =
@@ -32,8 +50,14 @@ in
       pkgs,
       lib,
       self',
+      inputs',
       ...
     }:
+    let
+      palette =
+        (builtins.fromJSON (builtins.readFile "${inputs'.catppuccin.packages.palette}/palette.json"))
+        .mocha.colors;
+    in
     {
       packages = {
         zsh = inputs.wrappers.wrappers.zsh.wrap {
@@ -100,7 +124,9 @@ in
         };
         ohMyPosh = inputs.wrappers.wrappers.oh-my-posh.wrap {
           inherit pkgs;
-          configFile = ./config.toml;
+          configFile = pkgs.replaceVars ./config.toml {
+            overlay1 = palette.overlay1.hex;
+          };
         };
       };
     };
