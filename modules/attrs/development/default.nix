@@ -57,6 +57,7 @@ in
         fastfetch
         fetch
         git
+        gitui
         zsh
       ];
       environment.systemPackages = packages pkgs;
@@ -70,6 +71,7 @@ in
         fastfetch
         fetch
         git
+        gitui
         zsh
       ];
       environment.systemPackages = packages pkgs;
