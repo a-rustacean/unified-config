@@ -15,7 +15,12 @@ in
   };
 
   perSystem =
-    { pkgs, ... }:
+    { pkgs, inputs', ... }:
+    let
+      palette =
+        (builtins.fromJSON (builtins.readFile "${inputs'.catppuccin.packages.palette}/palette.json"))
+        .mocha.colors;
+    in
     {
       packages.fastfetch = inputs.wrappers.wrappers.fastfetch.wrap {
         inherit pkgs;
@@ -40,8 +45,8 @@ in
           ];
           display = {
             separator = " → ";
-            color = "#cba6f7";
-            key.color = "#94e2d5";
+            color = palette.mauve.hex;
+            key.color = palette.teal.hex;
           };
         };
       };
