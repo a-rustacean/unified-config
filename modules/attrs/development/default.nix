@@ -54,6 +54,7 @@ in
     {
       imports = with self.nixosModules; [
         btop
+        fastfetch
         zsh
       ];
       environment.systemPackages = packages pkgs;
@@ -64,6 +65,7 @@ in
     {
       imports = with self.darwinModules; [
         btop
+        fastfetch
         zsh
       ];
       environment.systemPackages = packages pkgs;
