@@ -58,6 +58,7 @@ in
         fetch
         git
         gitui
+        ghostty
         zsh
       ];
       environment.systemPackages = packages pkgs;
@@ -72,6 +73,7 @@ in
         fetch
         git
         gitui
+        ghostty
         zsh
       ];
       environment.systemPackages = packages pkgs;
