@@ -53,6 +53,7 @@ in
     { pkgs, ... }:
     {
       imports = with self.nixosModules; [
+        btop
         zsh
       ];
       environment.systemPackages = packages pkgs;
@@ -62,6 +63,7 @@ in
     { pkgs, ... }:
     {
       imports = with self.darwinModules; [
+        btop
         zsh
       ];
       environment.systemPackages = packages pkgs;
