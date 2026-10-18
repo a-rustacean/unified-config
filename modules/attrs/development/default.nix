@@ -56,6 +56,7 @@ in
         btop
         fastfetch
         fetch
+        git
         zsh
       ];
       environment.systemPackages = packages pkgs;
@@ -68,6 +69,7 @@ in
         btop
         fastfetch
         fetch
+        git
         zsh
       ];
       environment.systemPackages = packages pkgs;
