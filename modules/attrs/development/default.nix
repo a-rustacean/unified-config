@@ -59,6 +59,7 @@ in
         git
         gitui
         ghostty
+        helix
         zsh
       ];
       environment.systemPackages = packages pkgs;
@@ -74,6 +75,7 @@ in
         git
         gitui
         ghostty
+        helix
         zsh
       ];
       environment.systemPackages = packages pkgs;
