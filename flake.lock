@@ -21,6 +21,26 @@
         "type": "github"
       }
     },
+    "fetch": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1791855008,
+        "narHash": "sha256-hgoTIBD2pvZDJxefMz+g8ALs4lqsMHOPHH4wwiomsaA=",
+        "owner": "areofyl",
+        "repo": "fetch",
+        "rev": "e3087810e2a131ed4093440e783ac96a101ad806",
+        "type": "github"
+      },
+      "original": {
+        "owner": "areofyl",
+        "repo": "fetch",
+        "type": "github"
+      }
+    },
     "flake-parts": {
       "inputs": {
         "nixpkgs-lib": "nixpkgs-lib"
@@ -88,6 +108,7 @@
     "root": {
       "inputs": {
         "darwin": "darwin",
+        "fetch": "fetch",
         "flake-parts": "flake-parts",
         "import-tree": "import-tree",
         "nixpkgs": "nixpkgs",
