@@ -60,6 +60,7 @@ in
         gitui
         ghostty
         helix
+        opencode
         zsh
       ];
       environment.systemPackages = packages pkgs;
@@ -76,6 +77,7 @@ in
         gitui
         ghostty
         helix
+        opencode
         zsh
       ];
       environment.systemPackages = packages pkgs;
