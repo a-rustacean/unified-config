@@ -8,9 +8,6 @@
         networking
         nix
         wallpaper
-
-        aerospace
-        ghostty
       ];
 
       environment.systemPackages = with pkgs; [
