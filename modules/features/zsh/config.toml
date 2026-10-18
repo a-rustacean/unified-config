@@ -1,0 +1,106 @@
+console_title_template = '{{ .Shell }} in {{ .Folder }}'
+version = 3
+final_space = true
+
+[secondary_prompt]
+  template = '❯❯ '
+  foreground = 'magenta'
+  background = 'transparent'
+
+[transient_prompt]
+  template = '❯ '
+  background = 'transparent'
+  foreground_templates = ['{{if gt .Code 0}}red{{end}}', '{{if eq .Code 0}}magenta{{end}}']
+
+[[blocks]]
+  type = 'prompt'
+  alignment = 'left'
+  newline = true
+
+[[blocks.segments]]
+type = 'text'
+style = 'plain'
+template = '''
+{{- if .Env.DEVSHELL_NAME -}}
+  {{- $parts := split "|" .Env.DEVSHELL_NAME -}}
+  {{- range $part := $parts -}}
+    {{- if $part -}}
+      {{- $sub := split "/" $part -}}
+      {{- if eq (len $sub) 2 -}}
+        <{{ index $sub "_1" }}>{{ index $sub "_0" }}</> <#7f849c>| </>
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+'''
+
+	[[blocks.segments]] # Hostname
+  type = 'text'
+  style = 'plain'
+  template = '{{ if eq .HostName "server02" }}<green>󰒋 {{.HostName}}</> <#7f849c>|</> {{ end }}'
+
+	[[blocks.segments]] # Python venv
+  type = 'text'
+  style = 'plain'
+  template = '{{ if .Env.VIRTUAL_ENV }}<yellow>🐍 venv</> <#7f849c>|</> {{ end }}'
+
+	[[blocks.segments]] # Nix shell indicator
+  type = 'text'
+  style = 'plain'
+  template = '{{ if and .Env.IN_NIX_SHELL (not .Env.DEVSHELL_NAME) }}<blue> nsh</> <#7f849c>|</> {{ end }}'
+
+  [[blocks.segments]]
+    template = '{{ .Path }}'
+    foreground = 'blue'
+    background = 'transparent'
+    type = 'path'
+    style = 'plain'
+
+    [blocks.segments.properties]
+      cache_duration = 'none'
+      style = 'full'
+
+  [[blocks.segments]]
+    template = ' {{ .HEAD }}{{ if or (.Working.Changed) (.Staging.Changed) }}<yellow> *</>{{ end }} <cyan>{{ if gt .Behind 0 }}󰁅{{ end }}{{ if gt .Ahead 0 }}{{ end }}</>'
+    foreground = 'green'
+    background = 'transparent'
+    type = 'git'
+    style = 'plain'
+
+    [blocks.segments.properties]
+      branch_icon = ''
+      cache_duration = 'none'
+      commit_icon = '@'
+      fetch_status = true
+
+[[blocks]]
+  type = 'rprompt'
+  overflow = 'hidden'
+
+  [[blocks.segments]]
+    template = '{{ .FormattedMs }}'
+    foreground = 'yellow'
+    background = 'transparent'
+    type = 'executiontime'
+    style = 'plain'
+
+    [blocks.segments.properties]
+      cache_duration = 'none'
+      threshold = 5000
+
+[[blocks]]
+  type = 'prompt'
+  alignment = 'left'
+  newline = true
+
+  [[blocks.segments]]
+    template = '❯'
+    background = 'transparent'
+    type = 'text'
+    style = 'plain'
+    foreground_templates = ['{{if gt .Code 0}}red{{end}}', '{{if eq .Code 0}}magenta{{end}}']
+
+    [blocks.segments.properties]
+      cache_duration = 'none'
+
+
