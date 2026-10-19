@@ -1,11 +1,13 @@
+{ moduleWithSystem, ... }:
 {
-  flake.darwinModules.user =
-    { pkgs, ... }:
+  flake.darwinModules.user = moduleWithSystem (
+    { self', ... }:
     {
       users.users.dilshad = {
         name = "dilshad";
         home = "/Users/dilshad";
-        shell = pkgs.zsh;
+        shell = self'.packages.zsh;
       };
-    };
+    }
+  );
 }
