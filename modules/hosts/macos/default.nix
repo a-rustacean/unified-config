@@ -6,6 +6,7 @@
       development
       gaming
       aerospace
+      home
       { nixpkgs.hostPlatform = "aarch64-darwin"; }
     ];
   };
