@@ -30,6 +30,7 @@ let
       zip
       unzip
       tarlz
+      nh
       # JS/TS
       nodejs_24
       typescript
@@ -62,6 +63,7 @@ in
         helix
         opencode
         zsh
+        zen
       ];
       environment.systemPackages = packages pkgs;
     };
@@ -79,6 +81,7 @@ in
         helix
         opencode
         zsh
+        zen
       ];
       environment.systemPackages = packages pkgs;
     };
