@@ -23,13 +23,19 @@ in
   };
 
   perSystem =
-    { pkgs, ... }:
+    {
+      self',
+      pkgs,
+      lib,
+      ...
+    }:
     {
       packages.ghostty = inputs.wrappers.wrappers.ghostty.wrap {
         inherit pkgs;
         settings = {
           # TODO:
-          command = "zsh -l";
+          command = "${lib.getExe self'.packages.zsh} -l";
+          working-directory = "home";
           language = "en";
           font-family = "JetBrainsMono Nerd Font";
           font-size = 20;
@@ -54,6 +60,7 @@ in
             "no-cursor"
             "sudo"
           ];
+          auto-update = "off";
         };
       };
     };
