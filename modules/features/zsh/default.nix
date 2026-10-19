@@ -108,7 +108,7 @@ in
 
             ${lib.getExe pkgs.any-nix-shell} zsh --info-right | source /dev/stdin
 
-            export EDITOR=helix
+            export EDITOR=hx
 
             eval "$(${lib.getExe self'.packages.ohMyPosh} init zsh)"
             eval "$(${lib.getExe pkgs.devenv} hook zsh)"
