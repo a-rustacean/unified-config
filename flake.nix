@@ -40,4 +40,11 @@
   };
 
   outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
+
+  nixConfig = {
+    extra-substituters = [ "https://a-rustacean-nixos-config-cache.cachix.org" ];
+    extra-trusted-public-keys = [
+      "a-rustacean-nixos-config-cache.cachix.org-1:Q4ttHUKuQxZZjVm+ujZOW0ioOdAvI1qbIQNVx9Hsfh8="
+    ];
+  };
 }
