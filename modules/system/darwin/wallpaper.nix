@@ -3,7 +3,7 @@
   flake.darwinModules.wallpaper =
     { ... }:
     {
-      system.activationScripts.myScript = {
+      system.activationScripts.wallpaper = {
         # TODO: no path
         text = ''
           /usr/bin/osascript -e "
