@@ -1,0 +1,37 @@
+# Publish locally built packages to Cachix
+name: Cachix
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    name: Publish Packages
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      matrix:
+        include:
+          - system: x86_64-linux
+            runner: ubuntu-latest
+
+          - system: aarch64-linux
+            runner: ubuntu-24.04-arm
+
+          - system: aarch64-darwin
+            runner: macos-latest
+    steps:
+    - uses: actions/checkout@v7
+    - uses: cachix/install-nix-action@v31
+
+    - name: Authenticate with Cachix
+      uses: cachix/cachix-action@5f2d7c5294214f71b873db4b969586b980625e71 # v17
+      with:
+        name: a-rustacean-nixos-config-cache
+        authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
+
+    - name: Build nix flake
+      run: nix build -L

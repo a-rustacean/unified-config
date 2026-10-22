@@ -1,0 +1,84 @@
+name: Build live ISOs
+
+on:
+  workflow_dispatch:
+    inputs:
+      x86_64-linux:
+        description: Build the x86_64-linux ISO
+        type: boolean
+        default: true
+      aarch64-linux:
+        description: Build the aarch64-linux ISO
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: iso-build
+  cancel-in-progress: true
+
+jobs:
+  x86_64-linux:
+    name: Build ISO (x86_64-linux)
+    runs-on: ubuntu-24.04
+    if: ${{ inputs.x86_64-linux }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@v22
+
+      - name: Cache Nix store
+        uses: DeterminateSystems/magic-nix-cache-action@v14
+
+      - name: Build ISO
+        run: |
+          nix build --print-build-logs .#packages.x86_64-linux.iso -o result
+
+      - name: Upload ISO
+        uses: actions/upload-artifact@v7
+        with:
+          name: unified-hyprland-x86_64-linux
+          path: result/iso/*.iso
+          retention-days: 30
+          compression-level: 0
+          if-no-files-found: error
+
+  aarch64-linux:
+    name: Build ISO (aarch64-linux)
+    runs-on: ubuntu-24.04
+    if: ${{ inputs.aarch64-linux }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      # No native ARM64 runner for this repo, so QEMU user-mode (binfmt)
+      # emulates aarch64 on the x86_64 runner.
+      - name: Set up QEMU for aarch64
+        uses: docker/setup-qemu-action@v4
+
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@v22
+        with:
+          extra-conf: |
+            extra-platforms = aarch64-linux
+
+      - name: Cache Nix store
+        uses: DeterminateSystems/magic-nix-cache-action@v14
+
+      - name: Build ISO
+        run: |
+          nix build --print-build-logs .#packages.aarch64-linux.iso -o result
+
+      - name: Upload ISO
+        uses: actions/upload-artifact@v7
+        with:
+          name: unified-hyprland-aarch64-linux
+          path: result/iso/*.iso
+          retention-days: 30
+          compression-level: 0
+          if-no-files-found: error
