@@ -1,0 +1,10 @@
+{
+  "workspace": {
+    "library": [
+      "/home/dilshad/.config/new-nix/hyprland"
+    ]
+  },
+  "diagnostics": {
+    "globals": ["hl"]
+  }
+}
