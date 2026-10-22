@@ -42,9 +42,7 @@
   outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
 
   nixConfig = {
-    extra-substituters = [ "https://a-rustacean-nixos-config-cache.cachix.org" ];
-    extra-trusted-public-keys = [
-      "a-rustacean-nixos-config-cache.cachix.org-1:Q4ttHUKuQxZZjVm+ujZOW0ioOdAvI1qbIQNVx9Hsfh8="
-    ];
+    extra-substituters = [ "https://unified.cachix.org" ];
+    extra-trusted-public-keys = [ "unified.cachix.org-1:cr0JwzAObOrduKLrGoaikC+BmrtYEmGwYDhaBK/8IBc=" ];
   };
 }
