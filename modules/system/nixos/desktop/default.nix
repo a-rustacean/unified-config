@@ -9,6 +9,17 @@
         network
         nix-ld
         systemTheme
+        hyprland
+        sddm
+        sddm-autologin
+        dunst
+        quickshell
+        hyprpaper
+        hyprlock
+        hypridle
+        hyprsunset
+        hyprlauncher
+        prismlauncher
       ];
     in
     {

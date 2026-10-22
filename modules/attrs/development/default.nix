@@ -55,12 +55,15 @@ in
     {
       imports = with self.nixosModules; [
         btop
+        cava
         fastfetch
         fetch
+        fzf
         git
         gitui
         ghostty
         helix
+        oh-my-posh
         opencode
         zsh
         zen
