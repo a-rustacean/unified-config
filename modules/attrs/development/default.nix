@@ -65,6 +65,7 @@ in
         helix
         oh-my-posh
         opencode
+        sops
         zsh
         zen
       ];
@@ -83,6 +84,7 @@ in
         ghostty
         helix
         opencode
+        sops
         zsh
         zen
       ];
