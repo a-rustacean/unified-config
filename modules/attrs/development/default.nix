@@ -45,8 +45,8 @@ let
       # Git
       gh
       # Zig
-      zig_0_16
-      zls_0_16
+      zig
+      zls
     ];
 in
 {
