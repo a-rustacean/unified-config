@@ -31,6 +31,7 @@ let
       unzip
       tarlz
       nh
+      localsend
       # JS/TS
       nodejs_24
       typescript
