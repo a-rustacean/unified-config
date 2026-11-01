@@ -32,10 +32,29 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    catppuccin-userstyles = {
+      url = "github:catppuccin/userstyles";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    firefox-extensions-declarative = {
+      url = "github:firefox-extensions-declarative/firefox-extensions-declarative";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-parts.follows = "flake-parts";
+        import-tree.follows = "import-tree";
+      };
+    };
+
     zen = {
       url = "github:0xc000022070/zen-browser-flake";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
+    };
+
+    catppuccin-zen = {
+      url = "github:catppuccin/zen-browser";
+      flake = false;
     };
   };
 

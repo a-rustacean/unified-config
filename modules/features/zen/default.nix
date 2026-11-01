@@ -37,7 +37,9 @@ let
       enable = true;
       setAsDefaultBrowser = true;
       darwin.packageMode = "wrapped";
-      policies = {
+      policies = let
+        stylus = import ./_stylus.nix { inherit inputs pkgs; };
+      in {
         AutofillAddressEnabled = true;
         AutofillCreditCardEnabled = false;
         DisableAppUpdate = true;
@@ -104,6 +106,27 @@ let
           "trackmenot@mrl.nyu.edu" = "trackmenot";
           "jid1-KKzOGWgsW3Ao4Q@jetpack" = "i-dont-care-about-cookies";
           "sponsorBlocker@ajay.app" = "sponsorblock";
+          "{7a7a4a92-a2a0-41d1-9fd7-1e92480d612d}" = {
+            installation_mode = "force_installed";
+            install_url = "file://${stylus.xpi}";
+            updates_disabled = true;
+            private_browsing = true;
+          };
+        };
+        "3rdparty" = {
+          Extensions."{7a7a4a92-a2a0-41d1-9fd7-1e92480d612d}" = {
+            prefs = {
+              patchCsp = true;
+              updateInterval = 0;
+              "sync.enabled" = false;
+            };
+            styles = [
+              {
+                code = builtins.readFile stylus.mergedCss;
+                variables = { };
+              }
+            ];
+          };
         };
       };
       profiles.default = {
@@ -114,6 +137,7 @@ let
           "zen.urlbar.behavior" = "float";
           "zen.welcome-screen.seen" = true;
           "zen.theme.use-system-colors" = false;
+          "xpinstall.signatures.required" = false;
         };
         mods = [
           "4ab93b88-151c-451b-a1b7-a1e0e28fa7f8" # No Sidebar Scrollbar
@@ -184,6 +208,8 @@ let
             };
           };
         };
+        userChrome = builtins.readFile "${inputs.catppuccin-zen}/themes/Mocha/Mauve/userChrome.css";
+        userContent = builtins.readFile "${inputs.catppuccin-zen}/themes/Mocha/Mauve/userContent.css";
       };
     };
   };
