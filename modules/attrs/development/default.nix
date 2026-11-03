@@ -32,6 +32,7 @@ let
       tarlz
       nh
       localsend
+      zed-editor
       # JS/TS
       nodejs_24
       typescript
