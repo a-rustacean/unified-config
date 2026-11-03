@@ -106,6 +106,7 @@ let
           "trackmenot@mrl.nyu.edu" = "trackmenot";
           "jid1-KKzOGWgsW3Ao4Q@jetpack" = "i-dont-care-about-cookies";
           "sponsorBlocker@ajay.app" = "sponsorblock";
+          "multithreaded-download-manager@qw.linux-2g64.local" = "multithreaded-download-manager";
           "{7a7a4a92-a2a0-41d1-9fd7-1e92480d612d}" = {
             installation_mode = "force_installed";
             install_url = "file://${stylus.xpi}";
