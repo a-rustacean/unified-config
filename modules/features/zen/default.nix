@@ -37,99 +37,101 @@ let
       enable = true;
       setAsDefaultBrowser = true;
       darwin.packageMode = "wrapped";
-      policies = let
-        stylus = import ./_stylus.nix { inherit inputs pkgs; };
-      in {
-        AutofillAddressEnabled = true;
-        AutofillCreditCardEnabled = false;
-        DisableAppUpdate = true;
-        DisableFeedbackCommands = true;
-        DisableFirefoxStudies = true;
-        DisablePocket = true;
-        DisableTelemetry = true;
-        DontCheckDefaultBrowser = true;
-        NoDefaultBookmarks = true;
-        OfferToSaveLogins = false;
-        EnableTrackingProtection = {
-          Value = true;
-          Locked = true;
-          Cryptomining = true;
-          Fingerprinting = true;
-        };
-        Preferences = mkLockedAttrs {
-          "ui.systemUsesDarkTheme" = true;
-          "browser.aboutConfig.showWarning" = false;
-          "browser.tabs.warnOnClose" = false;
-          "browser.ctrlTab.sortByRecentlyUsed" = true;
-          "media.videocontrols.picture-in-picture.video-toggle.enabled" = true;
-          # Disable swipe gestures (Browser:BackOrBackDuplicate, Browser:ForwardOrForwardDuplicate)
-          "browser.gesture.swipe.left" = "";
-          "browser.gesture.swipe.right" = "";
-          "browser.tabs.hoverPreview.enabled" = true;
-          "browser.newtabpage.activity-stream.feeds.topsites" = false;
-          "browser.topsites.contile.enabled" = false;
-
-          "privacy.resistFingerprinting" = true;
-          "privacy.resistFingerprinting.randomization.canvas.use_siphash" = true;
-          "privacy.resistFingerprinting.randomization.daily_reset.enabled" = true;
-          "privacy.resistFingerprinting.randomization.daily_reset.private.enabled" = true;
-          "privacy.resistFingerprinting.block_mozAddonManager" = true;
-          "privacy.spoof_english" = 1;
-
-          "privacy.firstparty.isolate" = true;
-          "network.cookie.cookieBehavior" = 5;
-          "dom.battery.enabled" = false;
-
-          "gfx.webrender.all" = true;
-          "network.http.http3.enabled" = true;
-          "network.socket.ip_addr_any.disabled" = true; # disallow bind to 0.0.0.0
-        };
-        ExtensionSettings = mkExtensionSettings {
-          # Extension to get IDs of other extensions
-          "queryamoid@kaply.com" = {
-            install_url = "https://github.com/mkaply/queryamoid/releases/download/v0.2/query_amo_addon_id-0.2-fx.xpi";
-            installation_mode = "force_installed";
-            default_area = "navbar";
-            private_browsing = true;
+      policies =
+        let
+          stylus = import ./_stylus.nix { inherit inputs pkgs; };
+        in
+        {
+          AutofillAddressEnabled = true;
+          AutofillCreditCardEnabled = false;
+          DisableAppUpdate = true;
+          DisableFeedbackCommands = true;
+          DisableFirefoxStudies = true;
+          DisablePocket = true;
+          DisableTelemetry = true;
+          DontCheckDefaultBrowser = true;
+          NoDefaultBookmarks = true;
+          OfferToSaveLogins = false;
+          EnableTrackingProtection = {
+            Value = true;
+            Locked = true;
+            Cryptomining = true;
+            Fingerprinting = true;
           };
-          "uBlock0@raymondhill.net" = mkExtensionEntry {
-            id = "ublock-origin";
-            pinned = true;
+          Preferences = mkLockedAttrs {
+            "ui.systemUsesDarkTheme" = true;
+            "browser.aboutConfig.showWarning" = false;
+            "browser.tabs.warnOnClose" = false;
+            "browser.ctrlTab.sortByRecentlyUsed" = true;
+            "media.videocontrols.picture-in-picture.video-toggle.enabled" = true;
+            # Disable swipe gestures (Browser:BackOrBackDuplicate, Browser:ForwardOrForwardDuplicate)
+            "browser.gesture.swipe.left" = "";
+            "browser.gesture.swipe.right" = "";
+            "browser.tabs.hoverPreview.enabled" = true;
+            "browser.newtabpage.activity-stream.feeds.topsites" = false;
+            "browser.topsites.contile.enabled" = false;
+
+            "privacy.resistFingerprinting" = true;
+            "privacy.resistFingerprinting.randomization.canvas.use_siphash" = true;
+            "privacy.resistFingerprinting.randomization.daily_reset.enabled" = true;
+            "privacy.resistFingerprinting.randomization.daily_reset.private.enabled" = true;
+            "privacy.resistFingerprinting.block_mozAddonManager" = true;
+            "privacy.spoof_english" = 1;
+
+            "privacy.firstparty.isolate" = true;
+            "network.cookie.cookieBehavior" = 5;
+            "dom.battery.enabled" = false;
+
+            "gfx.webrender.all" = true;
+            "network.http.http3.enabled" = true;
+            "network.socket.ip_addr_any.disabled" = true; # disallow bind to 0.0.0.0
           };
-          "{85860b32-02a8-431a-b2b1-40fbd64c9c69}" = "github-file-icons";
-          "{762f9885-5a13-4abd-9c77-433dcd38b8fd}" = "return-youtube-dislikes";
-          "{74145f27-f039-47ce-a470-a662b129930a}" = "clearurls";
-          "github-no-more@ihatereality.space" = "github-no-more";
-          "github-repository-size@pranavmangal" = "gh-repo-size";
-          "@searchengineadremover" = "searchengineadremover";
-          "jid1-BoFifL9Vbdl2zQ@jetpack" = "decentraleyes";
-          "trackmenot@mrl.nyu.edu" = "trackmenot";
-          "jid1-KKzOGWgsW3Ao4Q@jetpack" = "i-dont-care-about-cookies";
-          "sponsorBlocker@ajay.app" = "sponsorblock";
-          "multithreaded-download-manager@qw.linux-2g64.local" = "multithreaded-download-manager";
-          "{7a7a4a92-a2a0-41d1-9fd7-1e92480d612d}" = {
-            installation_mode = "force_installed";
-            install_url = "file://${stylus.xpi}";
-            updates_disabled = true;
-            private_browsing = true;
-          };
-        };
-        "3rdparty" = {
-          Extensions."{7a7a4a92-a2a0-41d1-9fd7-1e92480d612d}" = {
-            prefs = {
-              patchCsp = true;
-              updateInterval = 0;
-              "sync.enabled" = false;
+          ExtensionSettings = mkExtensionSettings {
+            # Extension to get IDs of other extensions
+            "queryamoid@kaply.com" = {
+              install_url = "https://github.com/mkaply/queryamoid/releases/download/v0.2/query_amo_addon_id-0.2-fx.xpi";
+              installation_mode = "force_installed";
+              default_area = "navbar";
+              private_browsing = true;
             };
-            styles = [
-              {
-                code = builtins.readFile stylus.mergedCss;
-                variables = { };
-              }
-            ];
+            "uBlock0@raymondhill.net" = mkExtensionEntry {
+              id = "ublock-origin";
+              pinned = true;
+            };
+            "{85860b32-02a8-431a-b2b1-40fbd64c9c69}" = "github-file-icons";
+            "{762f9885-5a13-4abd-9c77-433dcd38b8fd}" = "return-youtube-dislikes";
+            "{74145f27-f039-47ce-a470-a662b129930a}" = "clearurls";
+            "github-no-more@ihatereality.space" = "github-no-more";
+            "github-repository-size@pranavmangal" = "gh-repo-size";
+            "@searchengineadremover" = "searchengineadremover";
+            "jid1-BoFifL9Vbdl2zQ@jetpack" = "decentraleyes";
+            "trackmenot@mrl.nyu.edu" = "trackmenot";
+            "jid1-KKzOGWgsW3Ao4Q@jetpack" = "i-dont-care-about-cookies";
+            "sponsorBlocker@ajay.app" = "sponsorblock";
+            "multithreaded-download-manager@qw.linux-2g64.local" = "multithreaded-download-manager";
+            "{7a7a4a92-a2a0-41d1-9fd7-1e92480d612d}" = {
+              installation_mode = "force_installed";
+              install_url = "file://${stylus.xpi}";
+              updates_disabled = true;
+              private_browsing = true;
+            };
+          };
+          "3rdparty" = {
+            Extensions."{7a7a4a92-a2a0-41d1-9fd7-1e92480d612d}" = {
+              prefs = {
+                patchCsp = true;
+                updateInterval = 0;
+                "sync.enabled" = false;
+              };
+              styles = [
+                {
+                  code = builtins.readFile stylus.mergedCss;
+                  variables = { };
+                }
+              ];
+            };
           };
         };
-      };
       profiles.default = {
         settings = {
           "zen.ctrlTab.show-pending-tabs" = true;
