@@ -25,13 +25,19 @@ let
   );
 
   darwinModule = moduleWithSystem (
-    { self', ... }:
+    { pkgs, self', ... }:
     {
       programs.gnupg.agent = {
         enable = true;
         enableSSHSupport = true;
       };
-      environment.systemPackages = [ self'.packages.git ];
+      environment.systemPackages = [
+        self'.packages.git
+      ];
+      home-manager.users.dilshad.services.gpg-agent = {
+        enable = true;
+        pinentry.package = pkgs.pinentry_mac;
+      };
     }
   );
 in
